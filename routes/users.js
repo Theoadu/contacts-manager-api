@@ -1,5 +1,7 @@
 const express = require("express");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const config = require("config");
 const { check, validationResult } = require("express-validator");
 
 const User = require("../models/User");
@@ -41,7 +43,22 @@ router.post(
       const salt = await bcrypt.genSalt(10);
       user.password = await bcrypt.hash(password, salt);
       await user.save();
-      res.json({ msg: "Saved" });
+      const jwtpayload = {
+        user: {
+          id: user.id
+        }
+      };
+      jwt.sign(
+        jwtpayload,
+        config.get("jwtSecret"),
+        {
+          expiresIn: 360000
+        },
+        (err, token) => {
+          if (err) throw err;
+          res.json({ token });
+        }
+      );
     } catch (errors) {
       // ToDo implment file/email/SMS logging strategy here
       console.error(errors.message);
