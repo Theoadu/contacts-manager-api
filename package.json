@@ -5,7 +5,10 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "server": "nodemon server.js"
+    "server": "nodemon server.js",
+    "webfront": "npm start --prefix webfront",
+    "webfrontinstall": "npm install --prefix webfront",
+    "dev": "concurrently \"npm run server\" \"npm run webfront\" "
   },
   "keywords": [],
   "author": "",

@@ -1,2 +1,4 @@
 /node_modules
 access.log
+
+/webfront/node_modules
