@@ -2,3 +2,5 @@
 access.log
 
 /webfront/node_modules
+
+/config/defaultLocal.json
